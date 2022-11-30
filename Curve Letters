@@ -1,0 +1,77 @@
+radius = 50;
+
+PI = 3.14159;
+circumference = 2 * PI * radius;
+t1 = "QUALCOMM";
+t2 = "COUNCIL";
+max_letters = 20;
+font_size = circumference / max_letters;
+step_angle = 360 / max_letters;
+
+revolve_text(radius,_t1=t1,_t2=t2);
+
+
+module revolve_text(radius=50,_t1,_t2) {
+    t1_len = len(_t1);
+    t2_len = len(_t2);
+
+    
+    echo("font size: ");
+    echo(font_size);
+    mid_t1 = t1_len/2;
+    mid_t2 = t2_len/2;
+    
+    for(i = [0 : 1:  t1_len - 1]) {
+        rotate(-(i-mid_t1+1) * step_angle) 
+            rotate([0,0,0]) translate([0, radius + font_size / 2, 0]) 
+                text(
+                    _t1[i], 
+                    font = "Courier New; Style = Bold", 
+                    size = font_size, 
+                    valign = "center", halign = "center"
+                );
+    } // for fot t1
+    
+
+    //for(i = [0 : t2_len - 1]) {
+    for(i = [t2_len - 1:-1:0]) {
+        rotate([0,0,0]) 
+        rotate(-(i+max_letters/2-mid_t2+0.5) * step_angle) 
+            translate([0, radius + font_size / 2, 0]) 
+                rotate([0,0,180])  text(
+                    _t2[t2_len-i-1], 
+                    font = "Courier New; Style = Bold", 
+                    size = font_size, 
+                    valign = "center", halign = "center"
+                );
+    } // for fot t2
+    
+    
+    
+    
+    
+}// of revolve_text()
+
+
+
+
+/*
+module revolve_text_org(radius, chars) {
+    
+    
+    chars_len = len(chars);
+    font_size = circumference / chars_len;
+    step_angle = 360 / chars_len;
+    for(i = [0 : chars_len - 1]) {
+        rotate(-i * step_angle) 
+            rotate([0,0,0]) translate([0, radius + font_size / 2, 0]) 
+                text(
+                    chars[i], 
+                    font = "Courier New; Style = Bold", 
+                    size = font_size, 
+                    valign = "center", halign = "center"
+                );
+    }
+}
+
+*/
